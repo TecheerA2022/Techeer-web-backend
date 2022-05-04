@@ -28,8 +28,7 @@ public class Team {
     @Column(nullable = false)
     private Integer teamSemester;
 
-    @ManyToMany(mappedBy = "teams", fetch = FetchType.LAZY)
-    private Set<User> users = new HashSet<>();
+
 
     @Builder
     public Team(String teamName, Integer teamYear, Integer teamSemester) {
