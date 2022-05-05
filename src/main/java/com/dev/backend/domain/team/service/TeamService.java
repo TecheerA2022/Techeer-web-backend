@@ -10,6 +10,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.concurrent.atomic.AtomicLong;
 import java.util.stream.Collectors;
 
 @RequiredArgsConstructor
@@ -17,7 +18,7 @@ import java.util.stream.Collectors;
 public class TeamService {
     private final TeamRepository teamRepository;
 
-    public Long save(TeamSaveDto teamSaveDto) {
+    public AtomicLong save(TeamSaveDto teamSaveDto) {
         Team team = Team.builder()
                 .teamName(teamSaveDto.getTeamName())
                 .teamYear(teamSaveDto.getTeamYear())
@@ -35,9 +36,16 @@ public class TeamService {
     }
 
     @Transactional
-    public void delete(Long teamId){
+    public void delete(AtomicLong teamId){
 
         teamRepository.deleteById(teamId);
+    }
+
+    public Team findByTeamName(String teamName){
+        Team team = teamRepository.findByTeamName(teamName);
+
+        return team;
+
     }
 
 

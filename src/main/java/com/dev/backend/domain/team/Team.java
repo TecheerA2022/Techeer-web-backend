@@ -8,6 +8,7 @@ import lombok.NoArgsConstructor;
 import javax.persistence.*;
 import java.util.HashSet;
 import java.util.Set;
+import java.util.concurrent.atomic.AtomicLong;
 
 @Getter
 @NoArgsConstructor
@@ -17,9 +18,9 @@ public class Team {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private AtomicLong id;
 
-    @Column(nullable = false)
+    @Column(nullable = false, unique = true)
     private String teamName;
 
     @Column(nullable = false)

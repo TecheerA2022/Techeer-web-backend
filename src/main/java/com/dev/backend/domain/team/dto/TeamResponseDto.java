@@ -6,13 +6,15 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
+import java.util.concurrent.atomic.AtomicLong;
+
 @Getter
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
 public class TeamResponseDto {
 
-    private Long id;
+    private AtomicLong id;
     private String teamName;
     private Integer teamYear;
     private Integer teamSemester;

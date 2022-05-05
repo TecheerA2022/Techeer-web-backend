@@ -7,6 +7,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.util.concurrent.atomic.AtomicLong;
 
 @Entity
 @Builder
@@ -17,7 +18,7 @@ public class TeamInfo {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private AtomicLong id;
 
     @ManyToOne(fetch = FetchType.LAZY)
     private User user;
