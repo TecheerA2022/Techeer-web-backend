@@ -4,7 +4,6 @@ import com.dev.backend.domain.team.dto.TeamResponseDto;
 import com.dev.backend.domain.team.dto.TeamResponseIdDto;
 import com.dev.backend.domain.team.dto.TeamSaveDto;
 import com.dev.backend.domain.team.service.TeamService;
-import com.dev.backend.domain.user.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -12,7 +11,6 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.concurrent.atomic.AtomicLong;
 
 import static com.dev.backend.global.utils.Constants.API_PREFIX;
 
@@ -29,18 +27,18 @@ public class TeamController {
     }
 
     @PostMapping
-    public ResponseEntity save(@RequestBody TeamSaveDto teamSaveDto) {
+    public ResponseEntity<TeamResponseIdDto> save(@RequestBody TeamSaveDto teamSaveDto) {
         return ResponseEntity
                 .status(HttpStatus.CREATED)
                 .body(TeamResponseIdDto.fromEntity(this.teamService.save(teamSaveDto)));
     }
 
-    @DeleteMapping("/{id}")
-    public ResponseEntity<Void> delete(@PathVariable AtomicLong id) {
 
-        teamService.delete(id);
+    @DeleteMapping("/{teamName}")
+    public ResponseEntity<Void> deleteTeam(@PathVariable String teamName) {
+        teamService.delete(teamName);
         return ResponseEntity
-                .ok()
+                .status(HttpStatus.OK)
                 .body(null);
     }
 }

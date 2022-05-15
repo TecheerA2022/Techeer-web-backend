@@ -8,6 +8,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import javax.persistence.EntityExistsException;
 import java.util.List;
 import java.util.Optional;
 import java.util.concurrent.atomic.AtomicLong;
@@ -18,7 +19,7 @@ import java.util.stream.Collectors;
 public class TeamService {
     private final TeamRepository teamRepository;
 
-    public AtomicLong save(TeamSaveDto teamSaveDto) {
+    public Long save(TeamSaveDto teamSaveDto) {
         Team team = Team.builder()
                 .teamName(teamSaveDto.getTeamName())
                 .teamYear(teamSaveDto.getTeamYear())
@@ -36,15 +37,14 @@ public class TeamService {
     }
 
     @Transactional
-    public void delete(AtomicLong teamId){
-
-        teamRepository.deleteById(teamId);
+    public void delete(String teamName){
+        Team team = findByTeamName(teamName);
+        teamRepository.deleteById(team.getId());
     }
 
     public Team findByTeamName(String teamName){
-        Team team = teamRepository.findByTeamName(teamName);
 
-        return team;
+        return teamRepository.findByTeamName(teamName).orElseThrow(EntityExistsException::new);
 
     }
 

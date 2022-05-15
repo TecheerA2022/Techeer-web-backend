@@ -6,7 +6,6 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
-import java.util.concurrent.atomic.AtomicLong;
 
 @Getter
 @Builder
@@ -14,7 +13,7 @@ import java.util.concurrent.atomic.AtomicLong;
 @NoArgsConstructor
 public class TeamResponseDto {
 
-    private AtomicLong id;
+    private Long id;
     private String teamName;
     private Integer teamYear;
     private Integer teamSemester;

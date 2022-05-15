@@ -8,9 +8,9 @@ import java.util.concurrent.atomic.AtomicLong;
 @Getter
 @Builder
 public class TeamResponseIdDto {
-    private AtomicLong id;
+    private Long id;
 
-    public static TeamResponseIdDto fromEntity(AtomicLong id){
+    public static TeamResponseIdDto fromEntity(Long id){
         return TeamResponseIdDto.builder()
                 .id(id)
                 .build();

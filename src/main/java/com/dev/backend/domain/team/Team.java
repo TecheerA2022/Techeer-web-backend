@@ -1,14 +1,11 @@
 package com.dev.backend.domain.team;
 
-import com.dev.backend.domain.user.User;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
-import java.util.HashSet;
-import java.util.Set;
-import java.util.concurrent.atomic.AtomicLong;
+
 
 @Getter
 @NoArgsConstructor
@@ -18,7 +15,7 @@ public class Team {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private AtomicLong id;
+    private Long id;
 
     @Column(nullable = false, unique = true)
     private String teamName;
