@@ -5,6 +5,7 @@ import com.dev.backend.domain.team.dto.TeamResponseIdDto;
 import com.dev.backend.domain.team.dto.TeamSaveDto;
 import com.dev.backend.domain.team.service.TeamService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.ui.Model;
@@ -28,9 +29,15 @@ public class TeamController {
 
     @PostMapping
     public ResponseEntity<TeamResponseIdDto> save(@RequestBody TeamSaveDto teamSaveDto) {
-        return ResponseEntity
-                .status(HttpStatus.CREATED)
-                .body(TeamResponseIdDto.fromEntity(this.teamService.save(teamSaveDto)));
+        try {
+            return ResponseEntity
+                    .status(HttpStatus.CREATED)
+                    .body(TeamResponseIdDto.fromEntity(this.teamService.save(teamSaveDto)));
+        } catch (DataIntegrityViolationException exception){
+            return ResponseEntity
+                    .status(HttpStatus.BAD_REQUEST).body(TeamResponseIdDto.builder().id(null).build());
+        }
+
     }
 
 

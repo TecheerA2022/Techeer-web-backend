@@ -1,6 +1,7 @@
 package com.dev.backend.domain.team.dto;
 
 import com.dev.backend.domain.team.Team;
+import com.dev.backend.global.domain.dto.BaseTimeEntityDto;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;

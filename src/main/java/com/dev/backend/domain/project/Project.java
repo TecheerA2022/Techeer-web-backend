@@ -1,6 +1,7 @@
 package com.dev.backend.domain.project;
 
 import com.dev.backend.domain.team.Team;
+import com.dev.backend.global.domain.domain.BaseTimeEntity;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -13,8 +14,7 @@ import java.time.LocalDateTime;
 @Getter
 @NoArgsConstructor
 @Entity
-@Table(name = "project")
-public class Project {
+public class Project extends BaseTimeEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -24,46 +24,38 @@ public class Project {
     @JoinColumn(name = "team_id")
     private Team team;
 
-    @Column(name = "project_name", nullable = false)
+    @Column(nullable = false)
     private String projectName;
 
-    @Column(name = "project_year", nullable = false)
+    @Column(nullable = false)
     private Integer projectYear;
 
-    @Column(name = "project_quarter", nullable = false)
+    @Column(nullable = false)
     private Integer projectQuarter;
 
-    @Column(name = "create_date", nullable = false)
-    private LocalDateTime createDate;
-
-    @Column(name = "update_date", nullable = false)
-    private LocalDateTime updateDate;
-
-    @Column(name = "project_pdf", nullable = true)
+    @Column(nullable = true)
     private String projectPdf;
 
-    @Column(name = "project_github", nullable = true)
+    @Column(nullable = true)
     private String projectGithub;
 
-    @Column(name = "project_image", nullable = true)
+    @Column(nullable = true)
     private String projectImage;
 
-    @Column(name = "project_content", nullable = true)
+    @Column(nullable = true)
     private String projectContent;
 
-    @Column(name = "project_summary", nullable = true)
+    @Column(nullable = true)
     private String projectSummary;
 
-    @Column(name = "project_tag", columnDefinition = "json")
+    @Column(columnDefinition = "json")
     private String projectTag;
 
     @Builder
-    public Project(String projectName, Integer projectYear, Integer projectQuarter, LocalDateTime createDate, LocalDateTime updateDate, String projectPdf, String projectGithub, String projectImage, String projectContent, String projectSummary, String projectTag) {
+    public Project(String projectName, Integer projectYear, Integer projectQuarter, String projectPdf, String projectGithub, String projectImage, String projectContent, String projectSummary, String projectTag) {
         this.projectName = projectName;
         this.projectYear = projectYear;
         this.projectQuarter = projectQuarter;
-        this.createDate = createDate;
-        this.updateDate = updateDate;
         this.projectPdf = projectPdf;
         this.projectGithub = projectGithub;
         this.projectImage = projectImage;
