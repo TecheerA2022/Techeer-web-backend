@@ -1,5 +1,6 @@
 package com.dev.backend.domain.team.controller;
 
+import com.dev.backend.domain.team.dto.TeamRequestUpdateDto;
 import com.dev.backend.domain.team.dto.TeamResponseDto;
 import com.dev.backend.domain.team.dto.TeamResponseIdDto;
 import com.dev.backend.domain.team.dto.TeamSaveDto;
@@ -48,4 +49,10 @@ public class TeamController {
                 .status(HttpStatus.OK)
                 .body(null);
     }
+
+    @PutMapping("/{teamName}")
+    public Long update(@PathVariable String teamName, @RequestBody TeamRequestUpdateDto requestDto){
+        return teamService.update(teamName, requestDto);
+    }
+
 }

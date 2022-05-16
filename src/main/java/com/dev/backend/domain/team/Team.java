@@ -35,4 +35,10 @@ public class Team extends BaseTimeEntity {
         this.teamYear = teamYear;
         this.teamSemester = teamSemester;
     }
+
+    public void update(String teamName, Integer teamYear, Integer teamSemester) {
+        this.teamName = teamName;
+        this.teamYear = teamYear;
+        this.teamSemester = teamSemester;
+    }
 }

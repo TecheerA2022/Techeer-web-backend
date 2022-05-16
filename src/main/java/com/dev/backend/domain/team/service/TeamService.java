@@ -2,6 +2,7 @@ package com.dev.backend.domain.team.service;
 
 import com.dev.backend.domain.team.Team;
 import com.dev.backend.domain.team.TeamRepository;
+import com.dev.backend.domain.team.dto.TeamRequestUpdateDto;
 import com.dev.backend.domain.team.dto.TeamResponseDto;
 import com.dev.backend.domain.team.dto.TeamSaveDto;
 import lombok.RequiredArgsConstructor;
@@ -45,6 +46,15 @@ public class TeamService {
     public Team findByTeamName(String teamName){
 
         return teamRepository.findByTeamName(teamName).orElseThrow(EntityExistsException::new);
+
+    }
+
+    public Long update(String teamName, TeamRequestUpdateDto requestDto){
+        Team team = findByTeamName(teamName);
+        team.update(requestDto.getTeamName(), requestDto.getTeamYear(),
+                requestDto.getTeamSemester());
+        teamRepository.save(team);
+        return team.getId();
 
     }
 
