@@ -1,6 +1,7 @@
 package com.dev.backend.domain.team;
 
 import com.dev.backend.global.domain.domain.BaseTimeEntity;
+import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -9,7 +10,7 @@ import javax.persistence.*;
 
 
 @Getter
-@NoArgsConstructor
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Entity
 @Table(name = "teams", uniqueConstraints = {@UniqueConstraint(columnNames = "team_name")})
 public class Team extends BaseTimeEntity {
@@ -21,10 +22,10 @@ public class Team extends BaseTimeEntity {
     @Column(nullable = false, unique = true, name = "team_name")
     private String teamName;
 
-    @Column(nullable = false)
+    @Column(nullable = false, name = "team_year")
     private Integer teamYear;
 
-    @Column(nullable = false)
+    @Column(nullable = false, name = "team_semester")
     private Integer teamSemester;
 
 

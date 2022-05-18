@@ -23,8 +23,7 @@ public class TeamController {
     private final TeamService teamService;
 
     @GetMapping
-    public List<TeamResponseDto> getList(Model model){
-        model.addAttribute("team", teamService.findAll());
+    public List<TeamResponseDto> getList(){
         return teamService.findAll();
     }
 
@@ -33,26 +32,33 @@ public class TeamController {
         try {
             return ResponseEntity
                     .status(HttpStatus.CREATED)
-                    .body(TeamResponseIdDto.fromEntity(this.teamService.save(teamSaveDto)));
+                    .body(teamService.save(teamSaveDto));
         } catch (DataIntegrityViolationException exception){
             return ResponseEntity
-                    .status(HttpStatus.BAD_REQUEST).body(TeamResponseIdDto.builder().id(null).build());
+                    .status(HttpStatus.CONFLICT).body(TeamResponseIdDto.builder().id(null).build());
         }
 
     }
 
 
     @DeleteMapping("/{teamName}")
-    public ResponseEntity<Void> deleteTeam(@PathVariable String teamName) {
+    public ResponseEntity<String> deleteTeam(@PathVariable String teamName) {
         teamService.delete(teamName);
         return ResponseEntity
                 .status(HttpStatus.OK)
-                .body(null);
+                .body("deleteOneItem");
     }
 
     @PutMapping("/{teamName}")
-    public Long update(@PathVariable String teamName, @RequestBody TeamRequestUpdateDto requestDto){
-        return teamService.update(teamName, requestDto);
+    public ResponseEntity<TeamResponseIdDto> update(@PathVariable String teamName, @RequestBody TeamRequestUpdateDto requestDto){
+        try {
+            return ResponseEntity
+                    .status(HttpStatus.OK)
+                    .body(teamService.update(teamName, requestDto));
+        } catch (DataIntegrityViolationException exception){
+            return ResponseEntity
+                    .status(HttpStatus.CONFLICT).body(TeamResponseIdDto.builder().id(null).build());
+        }
     }
 
 }

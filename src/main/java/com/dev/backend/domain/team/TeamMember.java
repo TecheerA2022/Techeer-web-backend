@@ -1,19 +1,15 @@
 package com.dev.backend.domain.team;
 
 import com.dev.backend.domain.user.User;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import javax.persistence.*;
 
 @Entity
-@Builder
-@NoArgsConstructor
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
 @AllArgsConstructor
 @Getter
-public class TeamInfo {
+public class TeamMember {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -26,4 +22,11 @@ public class TeamInfo {
     private Team team;
 
     private Boolean isLeader;
+
+    @Builder
+    public TeamMember(User user, Team team, Boolean isLeader) {
+        this.user = user;
+        this.team = team;
+        this.isLeader = isLeader;
+    }
 }

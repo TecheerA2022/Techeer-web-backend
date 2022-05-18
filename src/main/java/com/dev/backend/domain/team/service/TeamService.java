@@ -4,6 +4,7 @@ import com.dev.backend.domain.team.Team;
 import com.dev.backend.domain.team.TeamRepository;
 import com.dev.backend.domain.team.dto.TeamRequestUpdateDto;
 import com.dev.backend.domain.team.dto.TeamResponseDto;
+import com.dev.backend.domain.team.dto.TeamResponseIdDto;
 import com.dev.backend.domain.team.dto.TeamSaveDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -11,8 +12,6 @@ import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.EntityExistsException;
 import java.util.List;
-import java.util.Optional;
-import java.util.concurrent.atomic.AtomicLong;
 import java.util.stream.Collectors;
 
 @RequiredArgsConstructor
@@ -20,16 +19,15 @@ import java.util.stream.Collectors;
 public class TeamService {
     private final TeamRepository teamRepository;
 
-    public Long save(TeamSaveDto teamSaveDto) {
+    public TeamResponseIdDto save(TeamSaveDto teamSaveDto) {
         Team team = Team.builder()
                 .teamName(teamSaveDto.getTeamName())
                 .teamYear(teamSaveDto.getTeamYear())
                 .teamSemester(teamSaveDto.getTeamSemester())
                 .build();
-        return teamRepository.save(team).getId();
+        return toIdDto(teamRepository.save(team).getId());
     }
 
-    @Transactional(readOnly = true)
     public List<TeamResponseDto> findAll(){
         return teamRepository.findAll()
                 .stream()
@@ -49,13 +47,18 @@ public class TeamService {
 
     }
 
-    public Long update(String teamName, TeamRequestUpdateDto requestDto){
+    public TeamResponseIdDto update(String teamName, TeamRequestUpdateDto requestDto){
         Team team = findByTeamName(teamName);
         team.update(requestDto.getTeamName(), requestDto.getTeamYear(),
                 requestDto.getTeamSemester());
         teamRepository.save(team);
-        return team.getId();
 
+        return toIdDto(team.getId());
+
+    }
+
+    public TeamResponseIdDto toIdDto(Long id){
+        return TeamResponseIdDto.fromEntity(id);
     }
 
 
